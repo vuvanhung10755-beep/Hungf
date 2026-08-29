@@ -45,6 +45,16 @@ exports.handler = async function (event) {
     const data = await response.json();
 
     if (!response.ok) {
+      // Hết hạn ngạch miễn phí (quá nhiều người chat cùng lúc) — trả về
+      // thông báo thân thiện thay vì lỗi kỹ thuật dài dòng của Google.
+      if (response.status === 429) {
+        return {
+          statusCode: 429,
+          body: JSON.stringify({
+            error: 'Hùng đang đông khách quá, đợi khoảng 1 phút rồi thử lại nhé! 😅'
+          })
+        };
+      }
       return { statusCode: response.status, body: JSON.stringify(data) };
     }
 
