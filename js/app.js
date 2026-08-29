@@ -56,10 +56,36 @@
     sorted.forEach((c) => {
       const item = document.createElement('div');
       item.className = 'convo-item' + (c.id === currentId ? ' active' : '');
-      item.textContent = c.title || 'Cuộc trò chuyện mới';
+
+      const title = document.createElement('span');
+      title.className = 'convo-title';
+      title.textContent = c.title || 'Cuộc trò chuyện mới';
+      item.appendChild(title);
+
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'convo-delete';
+      delBtn.title = 'Xóa cuộc trò chuyện này';
+      delBtn.innerHTML = '&times;';
+      delBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteConversation(c.id);
+      });
+      item.appendChild(delBtn);
+
       item.addEventListener('click', () => openConversation(c.id));
       convoList.appendChild(item);
     });
+  }
+
+  function deleteConversation(id) {
+    conversations = conversations.filter((c) => c.id !== id);
+    saveConversations();
+    if (currentId === id) {
+      startNewConversation();
+    } else {
+      renderConvoList();
+    }
   }
 
   function openConversation(id) {
