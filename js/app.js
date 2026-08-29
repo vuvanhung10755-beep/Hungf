@@ -98,22 +98,41 @@
 
   // ---------- Message rendering ----------
   function renderMessage(role, text) {
-    const div = document.createElement('div');
-    div.className = 'msg ' + role;
+    const bubble = document.createElement('div');
+    bubble.className = 'msg ' + role;
     if (role === 'ai' && window.marked) {
-      div.innerHTML = marked.parse(text);
+      bubble.innerHTML = marked.parse(text);
     } else {
-      div.textContent = text;
+      bubble.textContent = text;
     }
-    messagesEl.appendChild(div);
-    return div;
+
+    if (role === 'ai') {
+      const row = document.createElement('div');
+      row.className = 'msg-row';
+      const avatar = document.createElement('div');
+      avatar.className = 'avatar';
+      row.appendChild(avatar);
+      row.appendChild(bubble);
+      messagesEl.appendChild(row);
+      return row;
+    }
+
+    messagesEl.appendChild(bubble);
+    return bubble;
   }
 
   function showTyping() {
+    const row = document.createElement('div');
+    row.className = 'msg-row';
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar speaking';
     typingEl = document.createElement('div');
     typingEl.className = 'typing';
     typingEl.innerHTML = '<span></span><span></span><span></span>';
-    messagesEl.appendChild(typingEl);
+    row.appendChild(avatar);
+    row.appendChild(typingEl);
+    typingEl = row;
+    messagesEl.appendChild(row);
     scrollToBottom();
   }
   function hideTyping() {
