@@ -137,6 +137,7 @@
       row.className = 'msg-row';
       const avatar = document.createElement('div');
       avatar.className = 'avatar';
+      avatar.textContent = '🐻';
       row.appendChild(avatar);
       row.appendChild(bubble);
       messagesEl.appendChild(row);
@@ -152,6 +153,7 @@
     row.className = 'msg-row';
     const avatar = document.createElement('div');
     avatar.className = 'avatar speaking';
+    avatar.textContent = '🐻';
     typingEl = document.createElement('div');
     typingEl.className = 'typing';
     typingEl.innerHTML = '<span></span><span></span><span></span>';
