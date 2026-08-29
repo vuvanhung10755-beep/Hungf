@@ -182,6 +182,18 @@
     scrollToBottom();
   }
 
+  function showQuotaWait(text) {
+    const card = document.createElement('div');
+    card.className = 'quota-card';
+    card.innerHTML =
+      '<div class="quota-moon">🌙</div>' +
+      '<div class="quota-text"></div>' +
+      '<div class="quota-sub">Cứ thư giãn đã, lát quay lại nhé...</div>';
+    card.querySelector('.quota-text').textContent = text;
+    messagesEl.appendChild(card);
+    scrollToBottom();
+  }
+
   // ---------- Sidebar open/close (mobile) ----------
   function closeSidebarOnMobile() {
     if (window.innerWidth <= 860) {
@@ -276,6 +288,14 @@
       const data = await response.json();
 
       if (!response.ok) {
+        if (data.type === 'quota') {
+          hideTyping();
+          showQuotaWait(data.error || 'Hùng bận òi, để năm sau rồi trả lời nhé! 😴');
+          // Bỏ tin nhắn user vừa gửi ra khỏi lịch sử để không tính là đã trả lời
+          convo.messages.pop();
+          saveConversations();
+          return;
+        }
         throw new Error(data.error?.message || data.error || 'Lỗi không xác định');
       }
 
