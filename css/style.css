@@ -393,6 +393,82 @@ body{
   padding: 6px 0;
 }
 
+.quota-card{
+  align-self:center;
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  max-width:360px;
+  border-radius:20px;
+  padding: 26px 20px;
+  text-align:center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  animation: rise 0.4s ease;
+}
+.quota-card::before, .quota-card::after{
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  filter: blur(30px);
+  opacity:0.55;
+  z-index:0;
+}
+.quota-card::before{
+  width:140px; height:140px;
+  background: var(--accent-soft);
+  top:-40px; left:-30px;
+  animation: quotaDrift1 9s ease-in-out infinite;
+}
+.quota-card::after{
+  width:120px; height:120px;
+  background: var(--accent-pink);
+  bottom:-30px; right:-20px;
+  animation: quotaDrift2 11s ease-in-out infinite;
+}
+@keyframes quotaDrift1{
+  0%,100%{ transform: translate(0,0); }
+  50%{ transform: translate(20px, 16px); }
+}
+@keyframes quotaDrift2{
+  0%,100%{ transform: translate(0,0); }
+  50%{ transform: translate(-16px, -14px); }
+}
+.quota-moon{
+  position:relative;
+  z-index:1;
+  font-size:2rem;
+  display:inline-block;
+  margin-bottom:10px;
+  animation: quotaSway 3.2s ease-in-out infinite;
+}
+@keyframes quotaSway{
+  0%,100%{ transform: rotate(-6deg) translateY(0); }
+  50%{ transform: rotate(6deg) translateY(-4px); }
+}
+.quota-text{
+  position:relative;
+  z-index:1;
+  font-size:0.92rem;
+  color: var(--text);
+  line-height:1.5;
+}
+.quota-sub{
+  position:relative;
+  z-index:1;
+  font-size:0.76rem;
+  color: var(--text-dim);
+  margin-top:6px;
+  animation: quotaFade 2.4s ease-in-out infinite;
+}
+@keyframes quotaFade{
+  0%,100%{ opacity:0.5; }
+  50%{ opacity:1; }
+}
+@media (prefers-reduced-motion: reduce){
+  .quota-card::before, .quota-card::after, .quota-moon, .quota-sub{ animation:none !important; }
+}
+
 /* ---------- Composer ---------- */
 .composer-sticky{ padding: 10px 4px 18px 4px; }
 .composer{
