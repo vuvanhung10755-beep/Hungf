@@ -51,7 +51,8 @@ exports.handler = async function (event) {
         return {
           statusCode: 429,
           body: JSON.stringify({
-            error: 'Hùng đang đông khách quá, đợi khoảng 1 phút rồi thử lại nhé! 😅'
+            type: 'quota',
+            error: 'Hùng bận òi, để năm sau rồi trả lời nhé! 😴'
           })
         };
       }
